@@ -24,7 +24,7 @@ struct key_pair{
 };
 
 
-cpp_int random_bits(unsigned int k, bool strictDigitCount, bool mustBeOdd){
+static cpp_int random_bits(unsigned int k, bool strictDigitCount, bool mustBeOdd){
     unsigned int bytes = (k+7)/8;
 
     vector<uint8_t> buffer(bytes);
@@ -45,7 +45,7 @@ cpp_int random_bits(unsigned int k, bool strictDigitCount, bool mustBeOdd){
     return result;
 }
 
-cpp_int random_a(cpp_int p){
+static cpp_int random_a(cpp_int p){
     cpp_int a;
     unsigned int k = msb(p - 3) + 1;
 
@@ -56,13 +56,13 @@ cpp_int random_a(cpp_int p){
     return a + 2;
 }
 
-cpp_int mod_exp(cpp_int a, cpp_int b, cpp_int mod){
+static cpp_int mod_exp(cpp_int a, cpp_int b, cpp_int mod){
     if(b==0) return 1;
     cpp_int res = mod_exp(a,b/2,mod);
     return ((res*res)%mod * (b%2==1 ? a : 1)) % mod;
 }
 
-bool miller_rabin(cpp_int p, int s){
+static bool miller_rabin(cpp_int p, int s){
     cpp_int r = p - 1;
     int u = 0;
     while(r%2==0){
@@ -83,7 +83,7 @@ bool miller_rabin(cpp_int p, int s){
     return 1;
 }
 
-cpp_int generate_prime(int keySize){
+static cpp_int generate_prime(int keySize){
     unsigned int primeSize = keySize/2;
     cpp_int p = random_bits(primeSize, true, true);
 
@@ -93,7 +93,7 @@ cpp_int generate_prime(int keySize){
     return p;
 }
 
-cpp_int mod_inverse(cpp_int a, cpp_int m){
+static cpp_int mod_inverse(cpp_int a, cpp_int m){
     cpp_int m0 = m;
     cpp_int x0 = 0, x1 = 1;
 
