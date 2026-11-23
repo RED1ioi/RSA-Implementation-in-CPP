@@ -87,7 +87,7 @@ static cpp_int generate_prime(int keySize){
     unsigned int primeSize = keySize/2;
     cpp_int p = random_bits(primeSize, true, true);
 
-    while(!miller_rabin(p, 40))
+    while(!miller_rabin(p, 5))
         p = random_bits(primeSize, true, true);
 
     return p;
